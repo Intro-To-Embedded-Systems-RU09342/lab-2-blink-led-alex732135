@@ -1,3 +1,4 @@
+//MSP430FR6989
 #include <msp430.h>
 int buttonpress=1;
 int y=0;
@@ -14,9 +15,9 @@ int main(void)
   // previously configured port settings
   PM5CTL0 &= ~LOCKLPM5;
 
-  while (1)                                 // Test P1.4
+  while (1)                                 
   {
-    if((P1IN & BIT1)!=BIT1 && buttonpress==1)
+    if((P1IN & BIT1)!=BIT1 && buttonpress==1) //check if button is pressed
     {
       buttonpress=0;
       y++;
@@ -24,26 +25,25 @@ int main(void)
     else if((P1IN & BIT1)==BIT1)
         buttonpress=1;
 
-    if(y%4==0)
+    if(y%4==0) //fast blink
     {
         P1OUT ^= BIT0;
         _delay_cycles(25000);
     }
-    if(y%4==1)
+    if(y%4==1) //medium blink
         {
             P1OUT ^= BIT0;
             _delay_cycles(50000);
         }
-    if(y%4==2)
+    if(y%4==2) //slow blink
         {
             P1OUT ^= BIT0;
             _delay_cycles(75000);
         }
-    if(y%4==3)
+    if(y%4==3) //off
         {
             P1OUT &= ~BIT0;
         }
 
-      // if P1.4 set, set P1.0                      // else reset
   }
 }
